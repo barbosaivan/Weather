@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="error_server">Error en el servidor</string>
+    <string name="main_current_weather_title">Weather Current</string>
+    <string name="main_forecast_weather_title">Weather Forecast</string>
+    
+    <string name="weather_temp">%.2f°C</string>
+    <string name="weather_dt">Hour: %s</string>
+    <string name="weather_humidity">Humidity: %d%%</string>
+    <string name="weather_pop">Pop: %.1f%%</string>
+    <string name="main_error_empty_forecast">Pronostico no dispopnible</string>
+</resources>

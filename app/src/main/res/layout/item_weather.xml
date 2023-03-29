@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.example.weather.common.utils.CommonUtils"/>
+        <variable
+            name="current"
+            type="com.example.weather.common.entities.Current" />
+        
+        <variable
+            name="forecast"
+            type="com.example.weather.common.entities.ForeCast" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentTitle"
+        android:paddingHorizontal="@dimen/common_pading_default"
+        android:paddingVertical="@dimen/common_pading_min">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{current != null ? @string/weather_temp(current.temp) : @string/weather_temp(forecast.temp)}"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="?attr/colorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="234.2 °F" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:text="@{current != null ? @string/weather_dt(CommonUtils.INSTANCE.getHour(current.dt)) : CommonUtils.INSTANCE.getFullDate(forecast.dt)}"
+            tools:text="22:00"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceOverline"
+            android:text="@{current != null ? @string/weather_humidity(current.humidity) : @string/weather_humidity(forecast.humidity)}"
+            tools:text="Humidity: 78%"
+            app:layout_constraintStart_toStartOf="@id/tvDt"
+            app:layout_constraintTop_toBottomOf="@id/tvDt" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvPop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceOverline"
+            android:text="@{@string/weather_pop(forecast.pop)}"
+            tools:text="10%"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHumidity"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:text="@{current != null ? CommonUtils.INSTANCE.getWeatherMain(current.weather) : CommonUtils.INSTANCE.getWeatherMain(forecast.weather)}"
+            tools:text="Clouds%"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:text="@{current != null ? CommonUtils.INSTANCE.getWeatherDescription(current.weather) : CommonUtils.INSTANCE.getWeatherDescription(forecast.weather)}"
+            tools:text="Few Clouds%"
+            app:layout_constraintEnd_toEndOf="@id/tvMain"
+            app:layout_constraintTop_toBottomOf="@id/tvMain" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

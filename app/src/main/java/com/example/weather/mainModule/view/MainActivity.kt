@@ -16,6 +16,7 @@ import com.example.weather.BR
 import com.example.weather.R
 import com.example.weather.common.entities.ForeCast
 import com.example.weather.common.utils.CommonUtils
+import com.example.weather.common.utils.CustomToast
 import com.example.weather.databinding.ActivityMainBinding
 import com.example.weather.mainModule.view.adapters.ForecastAdapter
 import com.example.weather.mainModule.view.adapters.OnclickListener
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), OnclickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: ForecastAdapter
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var customToast: CustomToast
     private val MY_PERMISSIONS_REQUEST_LOCATION = 99
 
 
@@ -57,12 +59,21 @@ class MainActivity : AppCompatActivity(), OnclickListener {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), MY_PERMISSIONS_REQUEST_LOCATION)
         } else {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                location?.let {
-                    lifecycleScope.launch{
-                        binding.viewModel?.getWeatherAndForecast(it.latitude, it.longitude,
-                            "6a5c325c9265883997730d09be2328e8", "","metric", "en")
+                if (location != null) {
+                    location.let {
+                        lifecycleScope.launch {
+                            binding.viewModel?.getWeatherAndForecast(
+                                it.latitude, it.longitude,
+                                "6a5c325c9265883997730d09be2328e8", "", "metric", "en"
+                            )
+                        }
                     }
-
+                }else{
+                    customToast = CustomToast(
+                        this, getString(R.string.title_toast_information),
+                        getString(R.string.error_location_off),
+                        R.drawable.ic_launcher_foreground)
+                    customToast.show()
                 }
             }
         }
@@ -108,7 +119,11 @@ class MainActivity : AppCompatActivity(), OnclickListener {
                     loadWeather()
                 } else {
                     // Permission denied, handle the error
-                    Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
+                    customToast = CustomToast(
+                        this, getString(R.string.title_toast_information),
+                        getString(R.string.error_permission_denied),
+                        R.drawable.ic_launcher_foreground)
+                    customToast.show()
                 }
                 return
             }

@@ -9,4 +9,8 @@
     <string name="weather_humidity">Humidity: %d%%</string>
     <string name="weather_pop">Pop: %.1f%%</string>
     <string name="main_error_empty_forecast">Pronostico no dispopnible</string>
+    <string name="desciption_icon">Icon</string>
+    <string name="title_toast_information">Information</string>
+    <string name="error_permission_denied">Location permission denied</string>
+    <string name="error_location_off">You must activate the location</string>
 </resources>
